@@ -12,7 +12,7 @@ node{
 
 	
 	stage('push image'){
-		 sh("eval \$(aws ecr get-login --no-include-email | sed 's|https://||')")
+		
 		docker.withRegistry('https://208997411759.dkr.ecr.ap-south-1.amazonaws.com/jenkins-nodejs-app','ecr:ap-south-1:aws-amit-cred'){
 		docker.image('app').push('latest')
 		}
