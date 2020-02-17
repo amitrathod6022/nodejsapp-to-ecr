@@ -13,7 +13,7 @@ node{
 	
 	stage('push image'){
 		
-		docker.withRegistry('208997411759.dkr.ecr.ap-south-1.amazonaws.com/app','ecr:ap-south-1:aws-amit-cred'){
+		docker.withRegistry('https://208997411759.dkr.ecr.ap-south-1.amazonaws.com/app','ecr:ap-south-1:aws-amit-cred'){
 		docker.image('app').push('latest')
 		}
 	}
