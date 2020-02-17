@@ -1,12 +1,12 @@
 node{
 	
-	def app
+	def jenkins-nodejs-app
 	stage('Clone Repository'){
 		checkout scm
 	}
 
 	stage('Build Image'){
-		app=docker.build('app');
+		jenkins-nodejs-app=docker.build('app');
 
 	}
 
@@ -14,7 +14,7 @@ node{
 	stage('push image'){
 		
 		docker.withRegistry('https://208997411759.dkr.ecr.ap-south-1.amazonaws.com/jenkins-nodejs-app','ecr:ap-south-1:aws-amit-cred'){
-		docker.image('app').push('latest')
+		docker.image('jenkins-nodejs-app').push('latest')
 		}
 	}
 }
