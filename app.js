@@ -7,7 +7,7 @@ app.get('/',  (req, res)=> {
   res.send('Hello World!')
 })
 
-//Launch listening server on port 3200
+//Launch listening server on port 3200 ok
 app.listen(3200, ()=> {
   console.log('app listening on port 3100!')
 })
