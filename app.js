@@ -9,5 +9,5 @@ app.get('/',  (req, res)=> {
 
 //Launch listening server on port 3200 ok
 app.listen(3200, ()=> {
-  console.log('app listening on port 3100!')
+  console.log('app listening right now on port 3100!')
 })
