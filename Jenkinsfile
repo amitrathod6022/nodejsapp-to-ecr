@@ -19,7 +19,7 @@ node{
 	}
 
 	stage('deploy image'){
-		sh 'aws cloudformation create-stack --stack-name FargateDeploy --template-url https://amit-cloudformation-templete.s3.ap-south-1.amazonaws.com/aws-fargate-ecs.yaml'
+		bat 'aws cloudformation create-stack --stack-name FargateDeploy --template-url https://amit-cloudformation-templete.s3.ap-south-1.amazonaws.com/aws-fargate-ecs.yaml'
 
 	}
 }
