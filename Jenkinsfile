@@ -17,4 +17,9 @@ node{
 
 		}
 	}
+
+	stage('deploy image'){
+		sh'aws cloudformation create-stack --stack-name FargateDeploy --template-body file://aws-fargate-ecs.yaml'
+
+	}
 }
