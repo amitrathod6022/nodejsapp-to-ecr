@@ -19,7 +19,9 @@ node{
 	}
 
 	stage('deploy image'){
-		bat 'aws cloudformation create-stack --stack-name FargateDeploy --template-url https://amit-cloudformation-templete.s3.ap-south-1.amazonaws.com/aws-fargate-ecs.yaml'
+		bat'aws cloudformation delete-stack ECSService'
+		bat 'aws cloudformation update-stack ECSTaskDefinition --template-body file://ecsTaskDefinition.yaml --parameters ParameterKey=FamilyName,ParameterValue=NewTaskDef ParameterKey=PortToMap,ParameterValue=3200' 
+		bat 'aws cloudformation create-stack ECSService --template-body file://ecsService.yaml --parameters ParameterKey=TaskDefVersion,ParameterValue=1' 
 
 	}
 }
