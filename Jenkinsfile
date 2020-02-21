@@ -20,7 +20,7 @@ node{
 
 	stage('deploy image'){
 		bat'aws cloudformation delete-stack --stack-name ECSService'
-		bat'sleep 150'
+		bat'PING localhost -n 150 >NUL'
 		bat 'aws cloudformation update-stack --stack-name ECSTaskDefinition --template-body file://ecsTaskDefinition.yaml --parameters ParameterKey=FamilyName,ParameterValue=NewTaskDef ParameterKey=PortToMap,ParameterValue=3200' 
 		bat 'aws cloudformation create-stack --stack-name ECSService --template-body file://ecsService.yaml --parameters ParameterKey=TaskDefVersion,ParameterValue=1' 
 
