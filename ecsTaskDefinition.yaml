@@ -1,0 +1,42 @@
+Parameters:
+    FamilyName:
+        Type: String
+        MaxLength: 32
+    PortToMap:
+        Type: Number
+
+Resources:
+    ECSTaskDefinition:
+        Type: "AWS::ECS::TaskDefinition"
+        Properties:
+            ContainerDefinitions: 
+              - 
+                Essential: true
+                Image: !Sub "${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/app:latest"
+                MemoryReservation: 128
+                Name: Fargate-Container
+                PortMappings: 
+                  - 
+                    ContainerPort: !Ref PortToMap
+                    HostPort: !Ref PortToMap
+                    Protocol: "tcp"
+            Family: !Ref FamilyName
+            TaskRoleArn: !Sub "arn:aws:iam::${AWS::AccountId}:role/ecsTaskExecutionRole"
+            ExecutionRoleArn: !Sub "arn:aws:iam::${AWS::AccountId}:role/ecsTaskExecutionRole"
+            NetworkMode: "awsvpc"
+            RequiresCompatibilities: 
+              - "FARGATE"
+            Cpu: "256"
+            Memory: "512"
+
+Outputs:
+  ECSTaskDefOutputs:
+    Description: It is Refering the ECS TaskDefinition Name
+    Value: !Ref FamilyName
+    Export:
+      Name: ECSTaskDefName
+  ECSPortName:
+    Description: It is the ECS Container Port
+    Value: !Ref PortToMap
+    Export:
+        Name: ECSPortNum

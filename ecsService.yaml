@@ -1,0 +1,31 @@
+Parameters:
+    TaskDefVersion:
+        Type: Number
+Resources:
+    ECSService:
+        Type: "AWS::ECS::Service"
+        Properties:
+            ServiceName: "fargate-service"
+            Cluster: !ImportValue ECSClusterARN
+            LoadBalancers:
+                -
+                    TargetGroupArn: !Sub "arn:aws:elasticloadbalancing:${AWS::Region}:${AWS::AccountId}:targetgroup/fargate-group-ecs/9857fcd8f1805026"
+                    ContainerName: "Fargate-Container"
+                    ContainerPort: !ImportValue ECSPortNum 
+            DesiredCount: 1
+            LaunchType: "FARGATE"
+            PlatformVersion: "LATEST"
+            TaskDefinition: !Join ['/', [!Sub "arn:aws:ecs:${AWS::Region}:${AWS::AccountId}:task-definition" ,!Join [':', [!ImportValue ECSTaskDefName, !Ref TaskDefVersion]]]] 
+            DeploymentConfiguration: 
+                MaximumPercent: 200
+                MinimumHealthyPercent: 0
+            NetworkConfiguration: 
+                AwsvpcConfiguration: 
+                    AssignPublicIp: "ENABLED"
+                    SecurityGroups: 
+                      - "sg-0751dcf91fe8fd1a0"
+                    Subnets: 
+                      - "subnet-fd47eb86"
+                      - "subnet-15487c7d"
+                      - "subnet-9030aadc"
+            SchedulingStrategy: "REPLICA"
